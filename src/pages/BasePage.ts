@@ -11,9 +11,7 @@ export abstract class BasePage {
 
   async goto(): Promise<void> {
     await this.page.goto(this.url, { waitUntil: 'domcontentloaded' });
-    // give the page a moment to finish network activity for dynamic content
-    await this.page.waitForLoadState('networkidle');
-
+ 
     // Assert that we've reached a URL containing the expected fragment/path
     await expect(this.page).toHaveURL(new RegExp(this.url));
 
@@ -27,5 +25,19 @@ export abstract class BasePage {
 
   async currentUrlContains(fragment: string): Promise<void> {
     await expect(this.page).toHaveURL(new RegExp(fragment));
+  }
+
+  /**
+   * Return the first navigation landmark on the page.
+   */
+  getNavigation() {
+    return this.page.getByRole('navigation').first();
+  }
+
+  /**
+   * Return a locator for all anchor links inside the primary navigation.
+   */
+  getNavigationLinks() {
+    return this.getNavigation().locator('a');
   }
 }

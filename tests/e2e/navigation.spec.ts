@@ -6,15 +6,15 @@ test.describe('Top Navigation & Links', () => {
     await homePage.goto();
   });
 
-  test('Top navigation displays expected items and reachable links', async ({ homePage }) => {
+  test('navigation displays expected items', async ({ homePage }) => {
     // verify expected nav items and count using JSON-driven test data
     await homePage.assertNavigationLinksPresentAndEnabled(navData.labels, navData.count);
   });
 
   // Consolidated: click each navigation link and verify destination renders content
   test('navigation links navigate and destinations render meaningful content', async ({ page, homePage }) => {
-    const nav = page.getByRole('navigation').first();
-    const links = nav.locator('a');
+    const nav = homePage.getNavigation();
+    const links = homePage.getNavigationLinks();
     const count = await links.count();
 
     for (let i = 0; i < count; i++) {
