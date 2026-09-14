@@ -23,16 +23,19 @@ export class HomePage extends BasePage {
       await expect(actualCount).toBe(expectedCount);
     }
 
-    const texts: string[] = [];
+    const remaining = new Set(expectedLabels.map((l) => l.toLowerCase()));
     for (let i = 0; i < actualCount; i++) {
-      const t = (await links.nth(i).innerText()).trim();
-      texts.push(t.toLowerCase());
+      const t = (await links.nth(i).innerText()).trim().toLowerCase();
+      for (const label of Array.from(remaining)) {
+        if (t.includes(label)) remaining.delete(label);
+      }
+      if (remaining.size === 0) break;
     }
 
-    for (const label of expectedLabels) {
-      const found = texts.some((t) => t.includes(label.toLowerCase()));
-      await expect(found, `expected navigation to include "${label}"`).toBeTruthy();
-    }
+    await expect(
+      remaining.size,
+      `expected navigation to include all labels, missing: ${Array.from(remaining).join(', ')}`
+    ).toBe(0);
   }
 
   async goToSignUp(): Promise<void> {
