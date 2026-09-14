@@ -11,6 +11,14 @@ export abstract class BasePage {
 
   async goto(): Promise<void> {
     await this.page.goto(this.url, { waitUntil: 'domcontentloaded' });
+    // give the page a moment to finish network activity for dynamic content
+    await this.page.waitForLoadState('networkidle');
+
+    // Assert that we've reached a URL containing the expected fragment/path
+    await expect(this.page).toHaveURL(new RegExp(this.url));
+
+    // Basic sanity: page body should be visible
+    await expect(this.page.locator('body')).toBeVisible();
   }
 
   async waitForVisible(locator: Locator, timeout = 10_000): Promise<void> {
@@ -19,14 +27,5 @@ export abstract class BasePage {
 
   async currentUrlContains(fragment: string): Promise<void> {
     await expect(this.page).toHaveURL(new RegExp(fragment));
-  }
-
-  async dismissCookieBannerIfPresent(): Promise<void> {
-    // Trading platforms almost always have a cookie/consent overlay that
-    // blocks subsequent clicks if not handled defensively.
-    const acceptButton = this.page.getByRole('button', { name: /accept|agree/i });
-    if (await acceptButton.isVisible({ timeout: 3_000 }).catch(() => false)) {
-      await acceptButton.click();
-    }
   }
 }
