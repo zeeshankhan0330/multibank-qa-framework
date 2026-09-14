@@ -28,7 +28,9 @@ export abstract class BasePage {
   }
 
   /**
-   * Return the first navigation landmark on the page.
+   * Return the first navigation landmark on the page as a Locator.
+   * `getByRole` and `first()` are synchronous and return a Locator,
+   * so no `await` or `async` is necessary.
    */
   getNavigation() {
     return this.page.getByRole('navigation').first();
