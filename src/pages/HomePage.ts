@@ -24,26 +24,33 @@ export class HomePage extends BasePage {
     }
 
     const remaining = new Set(expectedLabels.map((l) => l.toLowerCase()));
+    const unmatchedAnchors: string[] = [];
 
-    if (remaining.size > 0) {
-      // build a single regex from expected labels (escape special chars)
-      const escaped = Array.from(remaining).map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-      const regex = new RegExp(`(${escaped.join('|')})`, 'i');
+    for (let i = 0; i < actualCount; i++) {
+      const text = (await links.nth(i).innerText()).trim();
+      const tLower = text.toLowerCase();
 
-      for (let i = 0; i < actualCount; i++) {
-        const t = (await links.nth(i).innerText()).trim();
-        const m = regex.exec(t);
-        if (m && m[1]) {
-          remaining.delete(m[1].toLowerCase());
+      // check against remaining expected labels; mark the first match
+      let matched = false;
+      for (const label of Array.from(remaining)) {
+        if (tLower.includes(label)) {
+          remaining.delete(label);
+          matched = true;
+          break;
         }
-        if (remaining.size === 0) break;
       }
+
+      if (!matched) unmatchedAnchors.push(text);
+      if (remaining.size === 0) break;
     }
 
-    await expect(
-      remaining.size,
-      `expected navigation to include all labels, missing: ${Array.from(remaining).join(', ')}`
-    ).toBe(0);
+    // soft-assert: report which expected labels are still missing at the end
+    if (remaining.size > 0) {
+      await expect(
+        remaining.size,
+        `expected navigation to include all labels, missing: ${Array.from(remaining).join(', ')}`
+      ).toBe(0);
+    }
   }
 
   async goToSignUp(): Promise<void> {
