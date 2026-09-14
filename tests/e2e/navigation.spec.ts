@@ -1,44 +1,51 @@
 import { test, expect } from '@fixtures/pageFixtures';
 import navData from '../data/navLinks.json';
 
-test.describe('Top Navigation & Links', () => {
+test.describe('Top Navigation @desktop', () => {
+  test.use({ viewport: { width: 1440, height: 900 } });
+
   test.beforeEach(async ({ homePage }) => {
     await homePage.goto();
   });
 
-  test('navigation displays expected items', async ({ homePage }) => {
-    // verify expected nav items and count using JSON-driven test data
+  test('navigation displays expected items at desktop viewport', async ({ homePage }) => {
     await homePage.assertNavigationLinksPresentAndEnabled(navData.labels, navData.count);
   });
 
-  // Consolidated: click each navigation link and verify destination renders content
-  test('navigation links navigate and destinations render meaningful content', async ({ page, homePage }) => {
-    const nav = homePage.getNavigation();
-    const links = homePage.getNavigationLinks();
-    const count = await links.count();
+  test('should navigate to Explore page successfully', async ({ homePage, explorePage }) => {
+    await homePage.clickNavigationLink('Explore');
+    await explorePage.assertLoaded();
+  });
 
-    for (let i = 0; i < count; i++) {
-      const a = links.nth(i);
-      const href = (await a.getAttribute('href')) || '';
-      if (!href) continue;
+  test('should navigate to Features page successfully', async ({ homePage, featuresPage }) => {
+    await homePage.clickNavigationLink('Features');
+    await featuresPage.assertLoaded();
+  });
 
-      // Skip fully external links (they open a new domain)
-      if (href.startsWith('http') && !href.includes(new URL(page.url()).host)) {
-        continue;
-      }
+  test('should navigate to OTC Desk page successfully', async ({ homePage, otcDeskPage }) => {
+    await homePage.clickNavigationLink('OTC Desk');
+    await otcDeskPage.assertLoaded();
+  });
 
-      // Click and wait for navigation/render
-      await Promise.all([page.waitForNavigation({ waitUntil: 'domcontentloaded' }), a.click()]);
+  test('should navigate to Company page successfully', async ({ homePage, companyPage }) => {
+    await homePage.clickNavigationLink('Company');
+    await companyPage.assertLoaded();
+  });
 
-      // Basic destination checks: page should have at least one visible heading or main element with text
-      const heading = page.locator('h1, h2, h3').filter({ hasText: /\w/ }).first();
-      const main = page.locator('main').first();
+  test('should navigate to Support page successfully', async ({ homePage, supportPage }) => {
+    await homePage.clickNavigationLink('Support');
+    await supportPage.assertLoaded();
+  });
 
-      const headingVisible = await heading.isVisible().catch(() => false);
-      const mainText = (await main.textContent().catch(() => '')) || '';
+  test('should navigate to Blog page successfully', async ({ homePage, blogPage }) => {
+    await homePage.clickNavigationLink('Blog');
+    await blogPage.assertLoaded();
+  });
 
-      expect(headingVisible || mainText.trim().length > 20, `destination ${href} should render meaningful content`).toBeTruthy();
-      await page.goBack();
-    }
+  test('should navigate to $MBG page successfully', async ({ homePage, mbgPage }) => {
+    const newTab = await homePage.clickNavigationLinkInNewTab('$MBG');
+    await expect(newTab).toHaveURL(/token/i);
+    await newTab.bringToFront();
+    await mbgPage.assertLoaded(newTab);
   });
 });

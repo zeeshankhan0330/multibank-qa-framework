@@ -14,10 +14,8 @@ export class HomePage extends BasePage {
   }
 
   async assertNavigationLinksPresentAndEnabled(expectedLabels: string[], expectedCount?: number): Promise<void> {
-    const nav = this.page.getByRole('navigation').first();
-    await expect(nav).toBeVisible();
-
-    const links = nav.locator('a');
+    const nav = this.getNavigation();
+    const links = this.getNavigationLinks();
     const actualCount = await links.count();
     if (typeof expectedCount === 'number') {
       await expect(actualCount).toBe(expectedCount);
@@ -43,11 +41,35 @@ export class HomePage extends BasePage {
     }
   }
 
-  async goToSignUp(): Promise<void> {
-    await this.signUpButton.click();
+  async clickNavigationLink(label: string): Promise<void> {
+    const link = this.getNavigation().getByRole('link', { name: label }).first();
+    await expect(link, `navigation link "${label}" should be visible`).toBeVisible();
+
+    const href = (await link.getAttribute('href')) || '';
+    if (!href) {
+      throw new Error(`Navigation link "${label}" has no href`);
+    }
+
+    if (href.startsWith('http') && !href.includes(new URL(this.page.url()).host)) {
+      return;
+    }
+
+    await Promise.all([
+      this.page.waitForLoadState('domcontentloaded'),
+      link.click(),
+    ]);
   }
 
-  async goToExploreAssets(): Promise<void> {
-    await this.exploreAllAssetsLink.click();
+  async clickNavigationLinkInNewTab(label: string): Promise<Page> {
+    const link = this.getNavigation().getByRole('link', { name: label }).first();
+    await expect(link, `navigation link "${label}" should be visible`).toBeVisible();
+
+    const [newTab] = await Promise.all([
+      this.page.waitForEvent('popup'),
+      link.click(),
+    ]);
+
+    await newTab.waitForLoadState('domcontentloaded');
+    return newTab;
   }
 }
