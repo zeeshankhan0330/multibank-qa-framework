@@ -1,20 +1,13 @@
 import { test, expect } from '@fixtures/pageFixtures';
+import navData from '../data/navLinks.json';
 
 test.describe('Top Navigation & Links', () => {
   test('navigation renders and links resolve (no 4xx/5xx)', async ({ page, homePage }) => {
     await homePage.goto();
     await homePage.dismissCookieBannerIfPresent();
 
-      // verify expected nav items and count using the HomePage helper
-      await homePage.verifyNavLinks([
-        'Explore',
-        'Features',
-        'OTC Desk',
-        'Company',
-        'Support',
-        'Blog',
-        '$MBG',
-      ], 7);
+      // verify expected nav items and count using JSON-driven test data
+      await homePage.verifyNavLinks(navData.labels, navData.count);
 
       const nav = page.getByRole('navigation', { name: /main/i });
     await expect(nav).toBeVisible();
