@@ -24,27 +24,16 @@ export class HomePage extends BasePage {
     }
 
     const remaining = new Set(expectedLabels.map((l) => l.toLowerCase()));
-    const unmatchedAnchors: string[] = [];
 
-    for (let i = 0; i < actualCount; i++) {
-      const text = (await links.nth(i).innerText()).trim();
-      const tLower = text.toLowerCase();
+    // Fetch all anchor texts in a single Playwright call and match in JS
+    const texts = await links.allInnerTexts();
+    const lower = texts.map((t) => t.trim().toLowerCase());
 
-      // check against remaining expected labels; mark the first match
-      let matched = false;
-      for (const label of Array.from(remaining)) {
-        if (tLower.includes(label)) {
-          remaining.delete(label);
-          matched = true;
-          break;
-        }
-      }
-
-      if (!matched) unmatchedAnchors.push(text);
-      if (remaining.size === 0) break;
+    for (const label of Array.from(remaining)) {
+      const found = lower.some((t) => t.includes(label));
+      if (found) remaining.delete(label);
     }
 
-    // soft-assert: report which expected labels are still missing at the end
     if (remaining.size > 0) {
       await expect(
         remaining.size,
