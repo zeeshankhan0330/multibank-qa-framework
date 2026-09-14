@@ -2,19 +2,17 @@ import { test, expect } from '@fixtures/pageFixtures';
 import navData from '../data/navLinks.json';
 
 test.describe('Top Navigation & Links', () => {
-  test('Top navigation displays expected items and reachable links', async ({ page, homePage }) => {
+  test.beforeEach(async ({ homePage }) => {
     await homePage.goto();
+  });
 
-      // verify expected nav items and count using JSON-driven test data
-      await homePage.verifyNavLinks(navData.labels, navData.count);
-
-    
+  test('Top navigation displays expected items and reachable links', async ({ homePage }) => {
+    // verify expected nav items and count using JSON-driven test data
+    await homePage.verifyNavLinks(navData.labels, navData.count);
   });
 
   // Consolidated: click each navigation link and verify destination renders content
   test('navigation links navigate and destinations render meaningful content', async ({ page, homePage }) => {
-    await homePage.goto();
-
     const nav = page.getByRole('navigation').first();
     const links = nav.locator('a');
     const count = await links.count();
