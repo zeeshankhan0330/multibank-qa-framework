@@ -13,7 +13,7 @@ export class HomePage extends BasePage {
     super(page);
   }
 
-  async verifyNavLinks(expectedLabels: string[], expectedCount?: number): Promise<void> {
+  async assertNavigationLinksPresentAndEnabled(expectedLabels: string[], expectedCount?: number): Promise<void> {
     const nav = this.page.getByRole('navigation').first();
     await expect(nav).toBeVisible();
 
@@ -23,22 +23,23 @@ export class HomePage extends BasePage {
       await expect(actualCount).toBe(expectedCount);
     }
 
-    const remaining = new Set(expectedLabels.map((l) => l.toLowerCase()));
-
-    // Fetch all anchor texts in a single Playwright call and match in JS
+    // Quick presence/count check using a single Playwright call
     const texts = await links.allInnerTexts();
     const lower = texts.map((t) => t.trim().toLowerCase());
 
-    for (const label of Array.from(remaining)) {
-      const found = lower.some((t) => t.includes(label));
-      if (found) remaining.delete(label);
+    const missing = expectedLabels.filter((l) => !lower.some((t) => t.includes(l.toLowerCase())));
+    if (missing.length > 0) {
+      await expect(
+        missing.length,
+        `expected navigation to include all labels, missing: ${missing.join(', ')}`
+      ).toBe(0);
     }
 
-    if (remaining.size > 0) {
-      await expect(
-        remaining.size,
-        `expected navigation to include all labels, missing: ${Array.from(remaining).join(', ')}`
-      ).toBe(0);
+    // Per-label actionability checks (visibility / enabled)
+    for (const label of expectedLabels) {
+      const locator = nav.getByRole('link', { name: label }).first();
+      await expect(locator, `navigation link "${label}" should be visible`).toBeVisible();
+      await expect(locator, `navigation link "${label}" should be enabled`).toBeEnabled();
     }
   }
 

@@ -8,7 +8,7 @@ test.describe('Top Navigation & Links', () => {
 
   test('Top navigation displays expected items and reachable links', async ({ homePage }) => {
     // verify expected nav items and count using JSON-driven test data
-    await homePage.verifyNavLinks(navData.labels, navData.count);
+    await homePage.assertNavigationLinksPresentAndEnabled(navData.labels, navData.count);
   });
 
   // Consolidated: click each navigation link and verify destination renders content
