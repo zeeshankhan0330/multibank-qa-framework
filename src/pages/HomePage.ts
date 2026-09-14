@@ -24,12 +24,20 @@ export class HomePage extends BasePage {
     }
 
     const remaining = new Set(expectedLabels.map((l) => l.toLowerCase()));
-    for (let i = 0; i < actualCount; i++) {
-      const t = (await links.nth(i).innerText()).trim().toLowerCase();
-      for (const label of Array.from(remaining)) {
-        if (t.includes(label)) remaining.delete(label);
+
+    if (remaining.size > 0) {
+      // build a single regex from expected labels (escape special chars)
+      const escaped = Array.from(remaining).map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+      const regex = new RegExp(`(${escaped.join('|')})`, 'i');
+
+      for (let i = 0; i < actualCount; i++) {
+        const t = (await links.nth(i).innerText()).trim();
+        const m = regex.exec(t);
+        if (m && m[1]) {
+          remaining.delete(m[1].toLowerCase());
+        }
+        if (remaining.size === 0) break;
       }
-      if (remaining.size === 0) break;
     }
 
     await expect(
