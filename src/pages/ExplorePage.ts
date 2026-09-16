@@ -8,7 +8,6 @@ export class ExplorePage extends BasePage {
 
   readonly contentContainer = this.page.getByRole('heading', { name: 'Markets at your fingertips' });
   readonly todaysTopCrypto = this.page.getByRole('heading', { name: /today's top crypto prices/i });
-  readonly todaysTopCryptoTableContent = this.page.locator('.bg-neutral-social tr');
 
   readonly marketWidgetContainer = this.page
     .locator('div')
