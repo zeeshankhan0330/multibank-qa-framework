@@ -2,3 +2,7 @@ node_modules/
 .env
 *.log
 .DS_Store
+# Playwright reports and test artifacts
+reports/
+test-results/
+playwright-report/
