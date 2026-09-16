@@ -1,3 +1,21 @@
+# Test Execution Evidence
+
+Command:
+
+    npm test
+
+Browser projects:
+- Chromium Desktop
+- Firefox Desktop
+- WebKit Desktop
+
+Execution evidence:
+See `evidenceOfTestRunOnMultiBrowsers.png`.
+
+The attached screenshot captures the local execution output
+for the configured browser projects.
+
+
 zeeshankhan@Mac multibank-qa-framework % npm test
 
 > multibank-qa-framework@1.0.0 test
