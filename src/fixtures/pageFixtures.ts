@@ -9,10 +9,12 @@ import { CompanyPage } from '@pages/CompanyPage';
 import { SupportPage } from '@pages/SupportPage';
 import { BlogPage } from '@pages/BlogPage';
 import { MbgPage } from '@pages/MbgPage';
+import { NegativePage } from '@pages/NegativePage';
 
 type PageFixtures = {
   homePage: HomePage;
   explorePage: ExplorePage;
+  negativePage: NegativePage;
   featuresPage: FeaturesPage;
   otcDeskPage: OtcDeskPage;
   companyPage: CompanyPage;
@@ -38,6 +40,9 @@ export const test = base.extend<PageFixtures>({
   },
   explorePage: async ({ page }, use) => {
     await use(new ExplorePage(page));
+  },
+  negativePage: async ({ page }, use) => {
+    await use(new NegativePage(page));
   },
   featuresPage: async ({ page }, use) => {
     await use(new FeaturesPage(page));
