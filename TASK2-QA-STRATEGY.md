@@ -115,4 +115,3 @@ Validate the app’s most critical user journeys and failure modes before public
 | Regulatory or disclosure regressions | Medium | Critical | Include legal/compliance checks in release QA and smoke tests |
 | Third-party link or app-store redirect issues | Medium | Medium | Validate deep links and app-download destinations before release |
 
-This is the structure I would use to answer the assignment directly: start with risk, test in layers, verify the user-impacting flows, and tie everything back to public release risk in fintech.
