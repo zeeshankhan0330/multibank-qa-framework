@@ -30,6 +30,19 @@ multibank-qa-framework/
 ├── playwright.config.ts  # Playwright configuration (reporters, projects)
 └── .vscode/             # Recommended workspace settings
 ```
+### Trading-pair scenario assumption
+
+The assessment specifies validation of the Spot trading section,
+trading-pair categorisation, and pair-level data fields.
+
+At the time of execution, the publicly accessible target application
+did not consistently expose the Spot trading UI described in the
+assessment. Therefore, the automation validates the currently
+observable trading/market content without inventing application
+behaviour that could not be verified.
+
+This limitation is documented rather than treated as a passing
+functional assertion against an assumed UI.
 
 ## Framework & Design Decisions
 
