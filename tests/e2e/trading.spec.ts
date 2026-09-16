@@ -1,6 +1,8 @@
 import { test, expect } from '@fixtures/pageFixtures';
 import { ExplorePage } from '@pages/ExplorePage';
 
+// The widget payload is shared across all three tests, so we intentionally keep the suite serial
+// even though the project otherwise allows parallel execution.
 test.describe.serial('Explore market widget', () => {
   let explorePage: ExplorePage;
   let widgetPayload: Array<{ id: string; items: string[]; name: string }>;
@@ -14,6 +16,10 @@ test.describe.serial('Explore market widget', () => {
 
     const widgetResponse = await widgetResponsePromise;
     widgetPayload = await widgetResponse.json();
+  });
+
+  test.afterAll(async () => {
+    await explorePage.close();
   });
 
   test('renders the widget and required display elements', async () => {

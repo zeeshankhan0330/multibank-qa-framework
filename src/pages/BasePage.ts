@@ -5,13 +5,13 @@ import { Page, Locator, expect } from '@playwright/test';
  * stay thin and only describe locators + page-specific actions.
  */
 export abstract class BasePage {
-  constructor(protected readonly page: Page) {}
+  constructor(protected readonly page: Page) { }
 
   abstract readonly url: string;
 
   async goto(): Promise<void> {
     await this.page.goto(this.url, { waitUntil: 'domcontentloaded' });
- 
+
     // Assert that we've reached a URL containing the expected fragment/path
     await expect(this.page).toHaveURL(new RegExp(this.url));
 
@@ -25,6 +25,10 @@ export abstract class BasePage {
 
   async currentUrlContains(fragment: string): Promise<void> {
     await expect(this.page).toHaveURL(new RegExp(fragment));
+  }
+
+  async close(): Promise<void> {
+    await this.page.close();
   }
 
   /**
