@@ -1,6 +1,4 @@
 node_modules/
-reports/
-test-results/
 .env
 *.log
 .DS_Store

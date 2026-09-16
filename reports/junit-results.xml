@@ -1,0 +1,158 @@
+<testsuites id="" name="" tests="48" failures="0" skipped="0" errors="0" time="46.205715000000005">
+<testsuite name="e2e/content.spec.ts" timestamp="2026-09-16T08:51:35.445Z" hostname="chromium-desktop" tests="3" failures="0" skipped="0" time="7.136" errors="0">
+<testcase name="Content &amp; External Links › marketing banners render in the expected page region" classname="e2e/content.spec.ts" time="1.422">
+</testcase>
+<testcase name="Content &amp; External Links › App Store and Google Play download links resolve correctly" classname="e2e/content.spec.ts" time="3.058">
+</testcase>
+<testcase name="Content &amp; External Links › About / Why MultiBank page renders all expected components with correct headings and section text" classname="e2e/content.spec.ts" time="2.656">
+</testcase>
+</testsuite>
+<testsuite name="e2e/navigation.spec.ts" timestamp="2026-09-16T08:51:35.445Z" hostname="chromium-desktop" tests="8" failures="0" skipped="0" time="17.718" errors="0">
+<testcase name="Top Navigation @desktop › navigation displays expected items at desktop viewport" classname="e2e/navigation.spec.ts" time="1.23">
+</testcase>
+<testcase name="Top Navigation @desktop › should navigate to Explore page successfully" classname="e2e/navigation.spec.ts" time="3.619">
+</testcase>
+<testcase name="Top Navigation @desktop › should navigate to Features page successfully" classname="e2e/navigation.spec.ts" time="3.646">
+</testcase>
+<testcase name="Top Navigation @desktop › should navigate to OTC Desk page successfully" classname="e2e/navigation.spec.ts" time="2.176">
+</testcase>
+<testcase name="Top Navigation @desktop › should navigate to Company page successfully" classname="e2e/navigation.spec.ts" time="1.342">
+</testcase>
+<testcase name="Top Navigation @desktop › should navigate to Support page successfully" classname="e2e/navigation.spec.ts" time="1.215">
+</testcase>
+<testcase name="Top Navigation @desktop › should navigate to Blog page successfully" classname="e2e/navigation.spec.ts" time="1.462">
+</testcase>
+<testcase name="Top Navigation @desktop › should navigate to $MBG page successfully" classname="e2e/navigation.spec.ts" time="3.028">
+</testcase>
+</testsuite>
+<testsuite name="e2e/negative.spec.ts" timestamp="2026-09-16T08:51:35.445Z" hostname="chromium-desktop" tests="2" failures="0" skipped="0" time="5.501" errors="0">
+<testcase name="Negative and edge cases › invalid route returns not-found or non-home content" classname="e2e/negative.spec.ts" time="2.534">
+</testcase>
+<testcase name="Negative and edge cases › slow content loads without hanging the page" classname="e2e/negative.spec.ts" time="2.967">
+</testcase>
+</testsuite>
+<testsuite name="e2e/trading.spec.ts" timestamp="2026-09-16T08:51:35.445Z" hostname="chromium-desktop" tests="3" failures="0" skipped="0" time="6.897" errors="0">
+<testcase name="Explore market widget › renders the widget and required display elements" classname="e2e/trading.spec.ts" time="0.851">
+<properties>
+<property name="serial" value="">
+</property>
+</properties>
+</testcase>
+<testcase name="Explore market widget › keeps the visible category symbols aligned with the API-backed market sections" classname="e2e/trading.spec.ts" time="4.734">
+<properties>
+<property name="serial" value="">
+</property>
+</properties>
+</testcase>
+<testcase name="Explore market widget › validates each visible row field and numeric formatting" classname="e2e/trading.spec.ts" time="1.312">
+<properties>
+<property name="serial" value="">
+</property>
+</properties>
+</testcase>
+</testsuite>
+<testsuite name="e2e/content.spec.ts" timestamp="2026-09-16T08:51:35.445Z" hostname="firefox-desktop" tests="3" failures="0" skipped="0" time="7.252" errors="0">
+<testcase name="Content &amp; External Links › marketing banners render in the expected page region" classname="e2e/content.spec.ts" time="1.912">
+</testcase>
+<testcase name="Content &amp; External Links › App Store and Google Play download links resolve correctly" classname="e2e/content.spec.ts" time="3.503">
+</testcase>
+<testcase name="Content &amp; External Links › About / Why MultiBank page renders all expected components with correct headings and section text" classname="e2e/content.spec.ts" time="1.837">
+</testcase>
+</testsuite>
+<testsuite name="e2e/navigation.spec.ts" timestamp="2026-09-16T08:51:35.445Z" hostname="firefox-desktop" tests="8" failures="0" skipped="0" time="17.419" errors="0">
+<testcase name="Top Navigation @desktop › navigation displays expected items at desktop viewport" classname="e2e/navigation.spec.ts" time="1.588">
+</testcase>
+<testcase name="Top Navigation @desktop › should navigate to Explore page successfully" classname="e2e/navigation.spec.ts" time="2.464">
+</testcase>
+<testcase name="Top Navigation @desktop › should navigate to Features page successfully" classname="e2e/navigation.spec.ts" time="3.283">
+</testcase>
+<testcase name="Top Navigation @desktop › should navigate to OTC Desk page successfully" classname="e2e/navigation.spec.ts" time="1.198">
+</testcase>
+<testcase name="Top Navigation @desktop › should navigate to Company page successfully" classname="e2e/navigation.spec.ts" time="1.383">
+</testcase>
+<testcase name="Top Navigation @desktop › should navigate to Support page successfully" classname="e2e/navigation.spec.ts" time="3.581">
+</testcase>
+<testcase name="Top Navigation @desktop › should navigate to Blog page successfully" classname="e2e/navigation.spec.ts" time="1.713">
+</testcase>
+<testcase name="Top Navigation @desktop › should navigate to $MBG page successfully" classname="e2e/navigation.spec.ts" time="2.209">
+</testcase>
+</testsuite>
+<testsuite name="e2e/negative.spec.ts" timestamp="2026-09-16T08:51:35.445Z" hostname="firefox-desktop" tests="2" failures="0" skipped="0" time="4.934" errors="0">
+<testcase name="Negative and edge cases › invalid route returns not-found or non-home content" classname="e2e/negative.spec.ts" time="1.409">
+</testcase>
+<testcase name="Negative and edge cases › slow content loads without hanging the page" classname="e2e/negative.spec.ts" time="3.525">
+</testcase>
+</testsuite>
+<testsuite name="e2e/trading.spec.ts" timestamp="2026-09-16T08:51:35.445Z" hostname="firefox-desktop" tests="3" failures="0" skipped="0" time="12.788" errors="0">
+<testcase name="Explore market widget › renders the widget and required display elements" classname="e2e/trading.spec.ts" time="0.867">
+<properties>
+<property name="serial" value="">
+</property>
+</properties>
+</testcase>
+<testcase name="Explore market widget › keeps the visible category symbols aligned with the API-backed market sections" classname="e2e/trading.spec.ts" time="6.863">
+<properties>
+<property name="serial" value="">
+</property>
+</properties>
+</testcase>
+<testcase name="Explore market widget › validates each visible row field and numeric formatting" classname="e2e/trading.spec.ts" time="5.058">
+<properties>
+<property name="serial" value="">
+</property>
+</properties>
+</testcase>
+</testsuite>
+<testsuite name="e2e/content.spec.ts" timestamp="2026-09-16T08:51:35.445Z" hostname="webkit-desktop" tests="3" failures="0" skipped="0" time="20.168" errors="0">
+<testcase name="Content &amp; External Links › marketing banners render in the expected page region" classname="e2e/content.spec.ts" time="6.022">
+</testcase>
+<testcase name="Content &amp; External Links › App Store and Google Play download links resolve correctly" classname="e2e/content.spec.ts" time="7.627">
+</testcase>
+<testcase name="Content &amp; External Links › About / Why MultiBank page renders all expected components with correct headings and section text" classname="e2e/content.spec.ts" time="6.519">
+</testcase>
+</testsuite>
+<testsuite name="e2e/navigation.spec.ts" timestamp="2026-09-16T08:51:35.445Z" hostname="webkit-desktop" tests="8" failures="0" skipped="0" time="54.278" errors="0">
+<testcase name="Top Navigation @desktop › navigation displays expected items at desktop viewport" classname="e2e/navigation.spec.ts" time="6.078">
+</testcase>
+<testcase name="Top Navigation @desktop › should navigate to Explore page successfully" classname="e2e/navigation.spec.ts" time="7.073">
+</testcase>
+<testcase name="Top Navigation @desktop › should navigate to Features page successfully" classname="e2e/navigation.spec.ts" time="7.559">
+</testcase>
+<testcase name="Top Navigation @desktop › should navigate to OTC Desk page successfully" classname="e2e/navigation.spec.ts" time="6.368">
+</testcase>
+<testcase name="Top Navigation @desktop › should navigate to Company page successfully" classname="e2e/navigation.spec.ts" time="6.872">
+</testcase>
+<testcase name="Top Navigation @desktop › should navigate to Support page successfully" classname="e2e/navigation.spec.ts" time="6.703">
+</testcase>
+<testcase name="Top Navigation @desktop › should navigate to Blog page successfully" classname="e2e/navigation.spec.ts" time="6.723">
+</testcase>
+<testcase name="Top Navigation @desktop › should navigate to $MBG page successfully" classname="e2e/navigation.spec.ts" time="6.902">
+</testcase>
+</testsuite>
+<testsuite name="e2e/negative.spec.ts" timestamp="2026-09-16T08:51:35.445Z" hostname="webkit-desktop" tests="2" failures="0" skipped="0" time="9.967" errors="0">
+<testcase name="Negative and edge cases › invalid route returns not-found or non-home content" classname="e2e/negative.spec.ts" time="1.765">
+</testcase>
+<testcase name="Negative and edge cases › slow content loads without hanging the page" classname="e2e/negative.spec.ts" time="8.202">
+</testcase>
+</testsuite>
+<testsuite name="e2e/trading.spec.ts" timestamp="2026-09-16T08:51:35.445Z" hostname="webkit-desktop" tests="3" failures="0" skipped="0" time="7.198" errors="0">
+<testcase name="Explore market widget › renders the widget and required display elements" classname="e2e/trading.spec.ts" time="0.409">
+<properties>
+<property name="serial" value="">
+</property>
+</properties>
+</testcase>
+<testcase name="Explore market widget › keeps the visible category symbols aligned with the API-backed market sections" classname="e2e/trading.spec.ts" time="5.836">
+<properties>
+<property name="serial" value="">
+</property>
+</properties>
+</testcase>
+<testcase name="Explore market widget › validates each visible row field and numeric formatting" classname="e2e/trading.spec.ts" time="0.953">
+<properties>
+<property name="serial" value="">
+</property>
+</properties>
+</testcase>
+</testsuite>
+</testsuites>
