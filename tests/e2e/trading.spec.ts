@@ -1,5 +1,5 @@
 import { test, expect } from '@fixtures/pageFixtures';
-import { ExplorePage } from '@pages/ExplorePage';
+import { ExplorePage, MarketTab } from '@pages/ExplorePage';
 
 // The widget payload is shared across all three tests, so we intentionally keep the suite serial
 // even though the project otherwise allows parallel execution.
@@ -25,9 +25,9 @@ test.describe.serial('Explore market widget', () => {
   test('renders the widget and required display elements', async () => {
     await expect(explorePage.marketWidgetContainer).toBeVisible();
     await expect(explorePage.todaysTopCrypto).toBeVisible({ timeout: 15_000 });
-    await expect(explorePage.getMarketTab('Hot')).toBeVisible();
-    await expect(explorePage.getMarketTab('Gainers')).toBeVisible();
-    await expect(explorePage.getMarketTab('Losers')).toBeVisible();
+    await expect(explorePage.getMarketTab(MarketTab.Hot)).toBeVisible();
+    await expect(explorePage.getMarketTab(MarketTab.Gainers)).toBeVisible();
+    await expect(explorePage.getMarketTab(MarketTab.Losers)).toBeVisible();
     await expect(explorePage.marketTableRows.first()).toBeVisible({ timeout: 15_000 });
   });
 

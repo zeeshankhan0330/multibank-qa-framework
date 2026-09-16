@@ -3,6 +3,12 @@ import { BasePage } from './BasePage';
 
 export type MarketCategoryId = 'hot' | 'gainers' | 'losers';
 
+export enum MarketTab {
+  Hot = 'Hot',
+  Gainers = 'Gainers',
+  Losers = 'Losers',
+}
+
 export class ExplorePage extends BasePage {
   readonly url = '/en/explore';
 
@@ -21,10 +27,10 @@ export class ExplorePage extends BasePage {
   readonly getMarketRowPriceCell = (index: number) => this.getMarketRow(index).locator('td').nth(1);
   readonly getMarketRowChangeCell = (index: number) => this.getMarketRow(index).locator('td').nth(2);
 
-  readonly marketCategories: ReadonlyArray<{ id: MarketCategoryId; label: string }> = [
-    { id: 'hot', label: 'Hot' },
-    { id: 'gainers', label: 'Gainers' },
-    { id: 'losers', label: 'Losers' },
+  readonly marketCategories: ReadonlyArray<{ id: MarketCategoryId; label: MarketTab }> = [
+    { id: 'hot', label: MarketTab.Hot },
+    { id: 'gainers', label: MarketTab.Gainers },
+    { id: 'losers', label: MarketTab.Losers },
   ];
 
   constructor(page: Page) {
@@ -46,7 +52,7 @@ export class ExplorePage extends BasePage {
     );
   }
 
-  getMarketTab(label: string) {
+  getMarketTab(label: MarketTab) {
     return this.marketTabButtons.filter({ hasText: label }).first();
   }
 
