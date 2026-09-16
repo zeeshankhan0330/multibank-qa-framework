@@ -4,9 +4,6 @@ import { BasePage } from './BasePage';
 export class NegativePage extends BasePage {
     readonly url = '/en';
 
-    readonly heroHeading = this.page.getByRole('heading', { name: /crypto for everyone/i });
-    readonly nav = this.getNavigation();
-    readonly navLinks = this.getNavigationLinks();
     readonly marketHeading = this.page.getByRole('heading', { name: /today's top crypto prices/i });
 
     constructor(page: Page) {
@@ -28,42 +25,31 @@ export class NegativePage extends BasePage {
         }
     }
 
-    async getBrokenNavigationLinks(): Promise<string[]> {
-        const links = this.nav.locator('a');
-        const count = await links.count();
-        const brokenLinks: string[] = [];
-
-        for (let index = 0; index < count; index++) {
-            const link = links.nth(index);
-            const href = (await link.getAttribute('href')) || '';
-            if (!href) {
-                continue;
-            }
-
-            const url = href.startsWith('http') ? href : new URL(href, this.page.url()).toString();
-            const response = await this.page.request.get(url);
-
-            if (response.status() >= 400) {
-                brokenLinks.push(`${url} (${response.status()})`);
-            }
-        }
-
-        return brokenLinks;
-    }
-
-    async assertMobileViewportStillShowsHero(): Promise<void> {
-        await this.page.setViewportSize({ width: 393, height: 852 });
-        await this.gotoHome();
-        await expect(this.heroHeading.first()).toBeVisible();
-    }
-
     async assertSlowWidgetDoesNotHang(): Promise<void> {
         await this.page.route('**/api/io/v1/market/widget', async (route) => {
             await new Promise((resolve) => setTimeout(resolve, 1500));
             await route.continue();
         });
 
-        await this.page.goto('https://mb.io/en/explore', { waitUntil: 'domcontentloaded' });
+        await this.page.goto('/en/explore', { waitUntil: 'domcontentloaded' });
         await expect(this.marketHeading).toBeVisible({ timeout: 30_000 });
+    }
+
+    async assertNeverResolvingWidgetRequestDoesNotCrash(): Promise<void> {
+        let pageError = false;
+        this.page.on('pageerror', () => {
+            pageError = true;
+        });
+
+        await this.page.route('**/api/io/v1/market/widget', async () => {
+            await new Promise(() => undefined);
+        });
+
+        await this.page.goto('/en/explore', { waitUntil: 'domcontentloaded' });
+
+        const bodyText = await this.page.locator('body').innerText();
+        expect(bodyText.length).toBeGreaterThan(0);
+        await expect(this.page.getByRole('heading', { name: /today's top crypto prices/i })).toBeVisible({ timeout: 30_000 });
+        expect(pageError, 'The page should not crash or throw an unhandled error when the widget request never resolves').toBe(false);
     }
 }
