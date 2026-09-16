@@ -1,6 +1,9 @@
 {
   "name": "multibank-qa-framework",
   "version": "1.0.0",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "description": "Production-grade Playwright/TypeScript UI automation framework for MultiBank Group (mb.io) critical trading platform flows.",
   "scripts": {
     "test": "playwright test",
