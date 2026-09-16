@@ -8,7 +8,6 @@ export class ExplorePage extends BasePage {
 
   readonly contentContainer = this.page.getByRole('heading', { name: 'Markets at your fingertips' });
   readonly todaysTopCrypto = this.page.getByRole('heading', { name: /today's top crypto prices/i });
-
   readonly marketWidgetContainer = this.page
     .locator('div')
     .filter({ has: this.page.getByRole('heading', { name: /today's top crypto prices/i }) })
@@ -17,6 +16,10 @@ export class ExplorePage extends BasePage {
   readonly marketTabButtons = this.marketWidgetContainer.locator('button');
   readonly marketTable = this.marketWidgetContainer.locator('table').first();
   readonly marketTableRows = this.marketTable.locator('tbody tr');
+  readonly getMarketRow = (index: number) => this.marketTableRows.nth(index);
+  readonly getMarketRowSymbol = (index: number) => this.getMarketRow(index).locator('img[alt]').first();
+  readonly getMarketRowPriceCell = (index: number) => this.getMarketRow(index).locator('td').nth(1);
+  readonly getMarketRowChangeCell = (index: number) => this.getMarketRow(index).locator('td').nth(2);
 
   readonly marketCategories: ReadonlyArray<{ id: MarketCategoryId; label: string }> = [
     { id: 'hot', label: 'Hot' },
@@ -70,10 +73,9 @@ export class ExplorePage extends BasePage {
     expect(rowCount, `The ${label} market should render at least one row`).toBeGreaterThan(0);
 
     for (let index = 0; index < rowCount; index++) {
-      const row = rows.nth(index);
-      const symbol = await row.locator('img[alt]').first().getAttribute('alt');
-      const priceText = (await row.locator('td').nth(1).textContent()) ?? '';
-      const changeText = (await row.locator('td').nth(2).textContent()) ?? '';
+      const symbol = await this.getMarketRowSymbol(index).getAttribute('alt');
+      const priceText = (await this.getMarketRowPriceCell(index).textContent()) ?? '';
+      const changeText = (await this.getMarketRowChangeCell(index).textContent()) ?? '';
 
       expect(symbol, `Row ${index} in ${label} should contain a symbol`).toBeTruthy();
       expect(priceText.trim(), `Row ${index} in ${label} should contain a visible price`).not.toBe('');
