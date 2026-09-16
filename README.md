@@ -2,17 +2,12 @@
 
 [![CI](https://github.com/zeeshankhan0330/multibank-qa-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/zeeshankhan0330/multibank-qa-framework/actions)
 
-Production-grade Playwright + TypeScript UI automation for core MultiBank user flows.
-
-Quick links
-
-- Project: multibank-qa-framework
-- Tests: Playwright (`@playwright/test`)
-- CI: GitHub Actions (`.github/workflows/ci.yml`)
+Playwright + TypeScript UI automation for MultiBank's public trading
+platform, built for the QA Automation Coding Challenge.
 
 Prerequisites
 
-- Node.js 18+ installed
+- Node.js 20+ installed
 - Git
 
 Quick start
@@ -25,13 +20,6 @@ npx playwright install --with-deps
 npm test
 ```
 
-Recommended commands
-
-- `npm test` — run full Playwright suite
-- `npm run test:smoke` — run smoke-tagged tests
-- `npm run test:regression` — run regression-tagged tests
-- `npm run test:headed` — run tests in headed mode for debugging
-
 Project structure
 
 ```
@@ -43,81 +31,63 @@ multibank-qa-framework/
 └── .vscode/             # Recommended workspace settings
 ```
 
-Design highlights
+## Framework & Design Decisions
 
-- Page Object Model + custom fixtures (see `src/pages` and `src/fixtures`)
-- Parallel, project matrix (Chromium/Firefox/WebKit/mobile) configured in `playwright.config.ts`
-- HTML + JUnit reporters configured to `reports/`
+**Page Object Model + custom fixtures.** Every page (`src/pages/`) encapsulates
+its own locators and actions; `src/fixtures/pageFixtures.ts` injects them into
+tests via dependency injection rather than tests instantiating `new HomePage(page)`
+inline. This keeps specs readable and means a locator change happens in one
+place, not wherever it's used.
 
-Navigation coverage and desktop viewport handling
+**Tests call page object methods, never locators directly.** No spec
+file in `tests/e2e/` contains a raw `page.locator(...)` or selector
+string — tests read as user actions and assertions (`homePage.goToSignUp()`,
+`explorePage.getRenderedSymbolsForCurrentCategory()`), while every locator
+lives inside its page object. This means a markup change only requires
+updating one file, not hunting across the test suite.
 
-A key requirement for the top navigation is that it behaves correctly at standard desktop viewport sizes. To reflect that in a production-ready way, the project uses desktop-specific Playwright projects in `playwright.config.ts` rather than looping over viewport sizes in the test file.
+**Multi-browser not just Chromium.** `playwright.config.ts`
+runs Chromium, Firefox, WebKit profile as separate
+projects.
 
-This keeps the suite readable and prevents a single generic loop from hiding which browser/project actually failed. The framework config defines desktop projects with standard viewport settings so the navigation tests validate real user behavior in common desktop layouts.
+**Retries on CI only, never locally.** A local failure should surface
+immediately while debugging; CI retries absorb network flakiness without
+masking a real regression — a test that fails twice on CI is treated as
+a real bug, not flake.
 
-Example approach used in the project:
+**Serial execution for the trading/market-widget suite** — a deliberate
+exception to the framework's default parallelism.** `trading.spec.ts`
+uses `test.describe.serial` because all three tests in that file share
+one API response captured once in `beforeAll` (confirmed via network
+inspection that Hot/Gainers/Losers tab-switching is client-side
+filtering of a single initial payload, not three separate API calls).
+Fetching it once and reusing it across tests is faster and more accurate
+than re-fetching per test; serial execution is the cost of that
+optimization, not an oversight.
 
-```ts
-projects: [
-  {
-    name: "chromium-desktop",
-    use: {
-      ...devices["Desktop Chrome"],
-      viewport: { width: 1440, height: 900 },
-    },
-  },
-  {
-    name: "firefox-desktop",
-    use: {
-      ...devices["Desktop Firefox"],
-      viewport: { width: 1440, height: 900 },
-    },
-  },
-  {
-    name: "webkit-desktop",
-    use: {
-      ...devices["Desktop Safari"],
-      viewport: { width: 1440, height: 900 },
-    },
-  },
-];
-```
+**Test data is externalized, not hardcoded.** Expected navigation labels
+live in `tests/data/navLinks.json`, not inline in `navigation.spec.ts` — the
+test asserts against imported data, so updating expected nav items means
+editing a JSON file, not the test logic itself.
 
-The navigation tests themselves remain route-specific and action-driven: each menu item is checked through its real click flow, and popup/new-tab cases such as `$MBG` are handled with dedicated logic instead of a generic helper.
+**Enums over hardcoded strings for repeated values.** Navigation labels
+(`Explore`, `Features`, `OTC Desk`, etc.) are defined once as a
+`NavigationLabel` enum in `HomePage.ts` and referenced by name everywhere
+else — `homePage.clickNavigationLink(NavigationLabel.Explore)` rather than
+the literal string `'Explore'` repeated across every test. A typo in a
+hardcoded string fails silently at runtime; a typo referencing an enum
+member fails at compile time, before the test ever runs.
 
-CI (GitHub Actions)
+**HTML + JUnit reporting.** JUnit output feeds CI's native test-result
+reporting (pass/fail inline in GitHub Actions); the HTML report is the
+human-debuggable artifact with traces and videos attached on first retry.
 
-The repository includes a GitHub Actions workflow that:
+## Task 2 — QA Strategy, Test Plan, Release Checklist & Risk Matrix
 
-- installs Node and dependencies
-- installs Playwright browsers
-- runs `npm test`
-- uploads Playwright HTML report and JUnit XML artifacts
+Written responses to Task 2's five questions, along with the required
+test plan, release readiness checklist, and risk matrix, are in
+[`TASK2-QA-STRATEGY.md`](./TASK2-QA-STRATEGY.md).
 
-Local development notes
-
-- Generate reproducible installs by committing `package-lock.json` (recommended).
-- To view the HTML report after a local run:
-
-```bash
-npm test
-npx playwright show-report reports/html-report
-```
-
-Submission checklist (recommended for interview)
-
-- [x] Clean README (this file)
-- [x] `playwright.config.ts` with reporters and projects
-- [x] GitHub Actions workflow: `.github/workflows/ci.yml`
-- [x] `.vscode/` settings to surface Playwright tests in Test Explorer
-- [x] `LICENSE` (MIT)
-
-Extras I can add
-
-- Test status badge in README (added) after a successful run
-- `package-lock.json` for deterministic installs
-- GitHub Pages publishing of HTML report
 
 Contact / Author
-
 Zeeshan Khan — repository prepared for submission.
