@@ -247,25 +247,4 @@ human-debuggable artifact with traces and videos attached on first retry.
 Evidence of test run on my local machine can be found in evidence folder
 Also, CI pipeline of this repo is configured to run the tests.
 
-## Assessment Coverage
-
-| Requirement | Implementation |
-|---|---|
-| Navigation & layout | `tests/e2e/navigation.spec.ts` |
-| Trading / market data | `tests/e2e/trading.spec.ts` |
-| Marketing / app links | `tests/e2e/content.spec.ts` |
-| Invalid route | `tests/e2e/negative.spec.ts` |
-| Slow-content handling | `tests/e2e/negative.spec.ts` |
-| API validation | `src/pages/ExplorePage.ts` |
-| Cross-browser | Chromium / Firefox / WebKit |
-| CI | `.github/workflows/ci.yml` |
-| Task 2 | `TASK2-QA-STRATEGY.md` |
-| Evidence | `evidence/` |  
-
-## Browser Matrix
-
-- Chromium — Desktop 1440x900
-- Firefox — Desktop 1440x900
-- WebKit — Desktop 1440x900
-
 CI executes the configured browser projects and publishes HTML/JUnit results.
