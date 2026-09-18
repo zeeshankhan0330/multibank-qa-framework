@@ -102,5 +102,10 @@ test plan, release readiness checklist, and risk matrix, are in
 [`TASK2-QA-STRATEGY.md`](./TASK2-QA-STRATEGY.md).
 
 
+## Evidence Of Test Run on local
+
+Evidence of test run on my local machine can be found in evidence folder
+Also, CI pipeline of this repo is configured to run the tests.
+
 Contact / Author
 Zeeshan Khan — repository prepared for submission.
