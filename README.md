@@ -2,15 +2,123 @@
 
 [![CI](https://github.com/zeeshankhan0330/multibank-qa-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/zeeshankhan0330/multibank-qa-framework/actions)
 
-Playwright + TypeScript UI automation for MultiBank's public trading
-platform, built for the QA Automation Coding Challenge.
+## Overview
 
-Prerequisites
+This repository contains a Playwright + TypeScript automation framework created for the MultiBank Group QA Automation assessment.
 
-- Node.js 20+ installed
-- Git
+The framework focuses on validating key public-facing MultiBank platform flows including navigation, market/trading data, content, links and negative/edge scenarios.
 
-Quick start
+The framework is designed with maintainability and scalability in mind using Page Object Model, custom fixtures, API/UI validation, cross-browser execution and CI reporting.
+
+## Assessment Coverage
+
+| Assessment Requirement | Implementation |
+|---|---|
+| Navigation & layout | Navigation E2E tests |
+| Navigation destinations | Destination assertions for internal/external links |
+| Trading / market data | UI + API market data validation |
+| Trading pair categories | Category validation against market data |
+| Marketing content | Content validation |
+| App Store / Google Play links | Link destination validation |
+| Why MultiBank page | Page/component/content validation |
+| Invalid route | Negative route test |
+| Broken navigation links | Navigation/link validation |
+| Slow content handling | Delayed network/content validation |
+| Cross-browser execution | Chromium, Firefox, WebKit |
+| API/network validation | Market API validation |
+| CI | GitHub Actions |
+| Reporting | HTML + JUnit |
+| Task 2 | `TASK2-QA-STRATEGY.md` |
+
+## Technology Stack
+
+- Playwright
+- TypeScript
+- Node.js 20+
+- GitHub Actions
+- HTML / JUnit reporting
+
+## Project Structure
+
+```text
+multibank-qa-framework/
+├── src/
+│   ├── pages/            # Page Object Models encapsulating UI locators and user actions
+│   ├── fixtures/         # Custom Playwright fixtures for shared test setup and dependencies
+│   └── utils/            # Reusable helpers and test utilities
+│
+├── tests/
+│   └── e2e/              # End-to-end tests grouped by functional area and tagged by test type
+│
+├── evidence/             # Sample execution evidence and cross-browser test results
+│
+├── .github/
+│   └── workflows/        # GitHub Actions workflow for automated test execution and reporting
+│
+├── playwright.config.ts  # Browser projects, viewport, timeouts, reporters, retries and test configuration
+├── TASK2-QA-STRATEGY.md  # Task 2 QA strategy, test plan, release checklist and risk matrix
+├── package.json          # Project scripts and dependencies
+└── .vscode/              # Recommended VS Code workspace settings
+
+Test Specs
+    ↓
+Custom Fixtures
+    ↓
+Page Objects
+    ↓
+UI / API
+    ↓
+Assertions & Reporting
+
+### Design
+
+- Tests contain business-level scenarios and assertions.
+- Page Objects encapsulate locators and UI interactions.
+- Fixtures provide reusable test dependencies and setup.
+- Utilities contain shared functionality.
+- API validation is used where UI data is backed by network responses.
+- Playwright configuration centralizes browser projects, execution settings and reporting.
+
+## Test Coverage
+
+### Navigation
+- Expected top navigation items are visible.
+- Navigation destinations are validated.
+- New-tab navigation is handled where applicable.
+
+### Trading / Market Data
+- Market data is available.
+- Trading symbols/categories are validated.
+- Rendered market values contain expected fields and numeric formats.
+- API responses are validated where appropriate.
+
+### Content
+- Marketing content is rendered.
+- App Store / Google Play links are validated.
+- About Us / Why MultiBank content is validated.
+
+### Negative / Edge Cases
+- Invalid route handling.
+- Slow content/network handling.
+
+
+## Browser & Execution Matrix
+
+| Browser | Viewport | Purpose |
+|---|---|---|
+| Chromium | 1440 × 900 | Desktop |
+| Firefox | 1440 × 900 | Desktop compatibility |
+| WebKit | 1440 × 900 | Desktop compatibility |
+| Mobile | Configured mobile viewport | Responsive regression |
+
+The framework uses Playwright projects to execute the suite across supported browser configurations.
+
+## Installation & Setup
+
+### Prerequisites
+
+- Node.js 20+
+- npm
 
 ```bash
 git clone https://github.com/zeeshankhan0330/multibank-qa-framework.git
@@ -19,17 +127,57 @@ npm install
 npx playwright install --with-deps
 npm test
 ```
+## CI/CD
 
-Project structure
+GitHub Actions executes the Playwright test suite in a clean Node.js environment.
 
-```
-multibank-qa-framework/
-├── src/                 # Page objects, fixtures, utilities
-├── tests/e2e/           # Playwright spec files
-├── .github/workflows/   # GitHub Actions CI
-├── playwright.config.ts  # Playwright configuration (reporters, projects)
-└── .vscode/             # Recommended workspace settings
-```
+The workflow:
+
+1. Checks out the repository.
+2. Installs Node.js dependencies.
+3. Installs Playwright browsers.
+4. Executes the test suite.
+5. Generates HTML/JUnit reports.
+6. Uploads test results as workflow artifacts.
+
+## Task 2 – QA Strategy
+
+The Task 2 scenario and responses are documented separately:
+
+[`TASK2-QA-STRATEGY.md`](./TASK2-QA-STRATEGY.md)
+
+The document covers:
+
+- Initial assessment and risk identification
+- Test strategy for a fintech trading application
+- QA activities within the sprint
+- Regression strategy
+- Release risks
+- Test plan
+- Release readiness checklist
+- Risk matrix
+
+## QA Deliverables
+
+| Deliverable | Location |
+|---|---|
+| Automation framework | Repository |
+| Test specifications | `tests/e2e/` |
+| Page Objects | `src/pages/` |
+| Fixtures | `src/fixtures/` |
+| Test evidence | `evidence/` |
+| Task 2 strategy | `TASK2-QA-STRATEGY.md` |
+| Test plan | `TASK2-QA-STRATEGY.md` |
+| Release readiness checklist | `TASK2-QA-STRATEGY.md` |
+| Risk matrix | `TASK2-QA-STRATEGY.md` |
+| CI workflow | `.github/workflows/` |
+
+## Limitations / Known Constraints
+
+- The assessment was limited to publicly accessible functionality as instructed.
+- No account creation or personal/financial information was used.
+- Some trading functionality described in the assessment was not consistently exposed through the public UI; the implemented validation approach is documented above.
+
 ### Trading-pair scenario assumption
 
 The assessment specifies validation of the Spot trading section,
@@ -95,17 +243,31 @@ member fails at compile time, before the test ever runs.
 reporting (pass/fail inline in GitHub Actions); the HTML report is the
 human-debuggable artifact with traces and videos attached on first retry.
 
-## Task 2 — QA Strategy, Test Plan, Release Checklist & Risk Matrix
-
-Written responses to Task 2's five questions, along with the required
-test plan, release readiness checklist, and risk matrix, are in
-[`TASK2-QA-STRATEGY.md`](./TASK2-QA-STRATEGY.md).
-
 
 ## Evidence Of Test Run on local
 
 Evidence of test run on my local machine can be found in evidence folder
 Also, CI pipeline of this repo is configured to run the tests.
 
-Contact / Author
-Zeeshan Khan — repository prepared for submission.
+## Assessment Coverage
+
+| Requirement | Implementation |
+|---|---|
+| Navigation & layout | `tests/e2e/navigation.spec.ts` |
+| Trading / market data | `tests/e2e/trading.spec.ts` |
+| Marketing / app links | `tests/e2e/content.spec.ts` |
+| Invalid route | `tests/e2e/negative.spec.ts` |
+| Slow-content handling | `tests/e2e/negative.spec.ts` |
+| API validation | `src/pages/ExplorePage.ts` |
+| Cross-browser | Chromium / Firefox / WebKit |
+| CI | `.github/workflows/ci.yml` |
+| Task 2 | `TASK2-QA-STRATEGY.md` |
+| Evidence | `evidence/` |  
+
+## Browser Matrix
+
+- Chromium — Desktop 1440x900
+- Firefox — Desktop 1440x900
+- WebKit — Desktop 1440x900
+
+CI executes the configured browser projects and publishes HTML/JUnit results.
