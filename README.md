@@ -57,7 +57,7 @@ multibank-qa-framework/
 ├── TASK2-QA-STRATEGY.md  # Task 2 QA strategy, test plan, release checklist and risk matrix
 ├── package.json          # Project scripts and dependencies
 └── .vscode/              # Recommended VS Code workspace settings
-
+```
 Test Specs
     ↓
 Custom Fixtures
