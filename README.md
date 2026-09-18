@@ -22,8 +22,7 @@ The framework is designed with maintainability and scalability in mind using Pag
 | App Store / Google Play links | Link destination validation |
 | Why MultiBank page | Page/component/content validation |
 | Invalid route | Negative route test |
-| Broken navigation links | Navigation/link validation |
-| Slow content handling | Delayed network/content validation |
+| Slow content handling  |
 | Cross-browser execution | Chromium, Firefox, WebKit |
 | API/network validation | Market API validation |
 | CI | GitHub Actions |
