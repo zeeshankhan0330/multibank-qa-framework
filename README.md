@@ -68,7 +68,7 @@ UI / API
     ↓
 Assertions & Reporting
 
-### Design
+## Design
 
 - Tests contain business-level scenarios and assertions.
 - Page Objects encapsulate locators and UI interactions.
@@ -79,23 +79,23 @@ Assertions & Reporting
 
 ## Test Coverage
 
-### Navigation
+## Navigation
 - Expected top navigation items are visible.
 - Navigation destinations are validated.
 - New-tab navigation is handled where applicable.
 
-### Trading / Market Data
+## Trading / Market Data
 - Market data is available.
 - Trading symbols/categories are validated.
 - Rendered market values contain expected fields and numeric formats.
 - API responses are validated where appropriate.
 
-### Content
+## Content
 - Marketing content is rendered.
 - App Store / Google Play links are validated.
 - About Us / Why MultiBank content is validated.
 
-### Negative / Edge Cases
+## Negative / Edge Cases
 - Invalid route handling.
 - Slow content/network handling.
 
