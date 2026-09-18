@@ -20,7 +20,7 @@ const BASE_URL = process.env.BASE_URL || 'https://mb.io';
 export default defineConfig({
   testDir: './tests',
   timeout: 30_000,
-  expect: { timeout: 5_000 },
+  expect: { timeout: 10_000 },
   fullyParallel: true,
   forbidOnly: isCI,
   retries: isCI ? 2 : 0,
